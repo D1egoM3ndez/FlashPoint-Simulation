@@ -1,0 +1,17 @@
+@startuml GameState
+title Diagrama de Estado - Juego Principal
+
+[*] --> Setup
+
+Setup --> InProgress : IniciarJuego
+
+InProgress --> Won : victimasRescued >= meta\nY dañoTotal < umbral
+InProgress --> Lost : victimasLost > maxPermitidas\nOR dañoTotal >= umbralDaño
+
+InProgress --> Pause : PausarJuego
+Pause --> InProgress : ReanudarJuego
+
+Won --> [*]
+Lost --> [*]
+
+@enduml

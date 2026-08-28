@@ -1,0 +1,34 @@
+# Carpetas generadas por Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+fire/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+.idea/
+
+# Archivos temporales
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Visual Studio
+*.csproj
+*.sln
+*.suo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Crash reports
+sysinfo.txt

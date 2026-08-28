@@ -1,0 +1,17 @@
+@startuml POIState
+title Diagrama de Estado - Punto de Interes (POI)
+
+[*] --> UNKNOWN
+
+UNKNOWN --> REVEALED_VICTIM : Agente inspecciona
+UNKNOWN --> REVEALED_FALSE : Agente inspecciona
+
+REVEALED_VICTIM --> RESCUED : Agente completa rescate
+REVEALED_VICTIM --> DEAD : Agente no logra rescate
+
+REVEALED_FALSE --> [*] : Descartado
+DEAD --> [*] : Victima muerta
+
+RESCUED --> [*] : Victima a salvo
+
+@enduml

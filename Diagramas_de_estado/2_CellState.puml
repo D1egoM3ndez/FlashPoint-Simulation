@@ -1,0 +1,12 @@
+@startuml CellState
+title Diagrama de Estado - Celda del Tablero
+
+[*] --> CLEAR
+
+CLEAR --> SMOKE : Propagacion humo\n(resultado dado)
+SMOKE --> FIRE : Propagacion fuego\n(resultado dado)
+FIRE --> CLEAR : Fuego extinguido\n(accion agente)
+SMOKE --> CLEAR : Humo disipado\n(accion agente)
+FIRE --> SMOKE : Fuego reducido\n(accion agente)
+
+@enduml

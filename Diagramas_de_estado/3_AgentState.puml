@@ -1,0 +1,15 @@
+@startuml AgentState
+title Diagrama de Estado - Agente Bombero
+
+[*] --> Idle
+
+Idle --> Acting : Realizar accion\n(gastar AP)
+Idle --> KnockedDown : Explosion/Colapso
+
+Acting --> Idle : Accion completada
+
+KnockedDown --> Idle : Turno siguiente\n(reinicio automatico)
+
+Idle --> Idle : Pasar turno\n(sin gastar AP)
+
+@enduml

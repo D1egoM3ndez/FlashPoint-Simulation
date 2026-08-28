@@ -1,0 +1,12 @@
+@startuml WallState
+title Diagrama de Estado - Pared y Puerta
+
+ [*] --> CLEAR_WALL
+
+CLEAR_WALL --> DAMAGED_WALL : Explosion/Colapso
+
+DAMAGED_WALL --> DESTROYED : Segunda explosion
+
+DESTROYED --> [*]
+
+@enduml
