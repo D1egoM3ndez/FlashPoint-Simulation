@@ -1,6 +1,8 @@
 // TopDownCamera.cs
-// Camara ortografica top-down con pan (clic derecho + arrastrar) y
-// zoom (rueda del mouse). Pegar en la Main Camera.
+// Pan (clic derecho + arrastrar) y zoom (rueda del mouse) para la camara del tablero.
+// La proyeccion (ortografica/perspectiva), rotacion y posicion inicial se dejan como
+// esten configuradas en el Inspector (por ahora: perspectiva, en angulo) en vez de
+// forzarlas a top-down desde el script.
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -19,16 +21,16 @@ public class TopDownCamera : MonoBehaviour
     void Awake()
     {
         cam = GetComponent<Camera>();
-        cam.orthographic = true;
-        transform.rotation = Quaternion.Euler(90f, 0f, 0f); // mirando hacia abajo
     }
 
-    // Centra la camara sobre el tablero y calcula el Size exacto para
-    // que quepa completo en la vista, sin importar el tamano del
-    // tablero ni el aspecto de la pantalla. Se llama una vez desde
-    // BoardBuilder despues de instanciar todo.
+    // Centra la camara sobre el tablero y calcula el Size exacto para que quepa
+    // completo en la vista. Solo aplica si la camara esta en modo ortografico
+    // (top-down); si esta en perspectiva (encuadre manual en el Inspector) no toca
+    // nada, para no pisar la posicion/rotacion que hayas dejado configurada ahi.
     public void FitToBoard(int widthCells, int heightCells, float cellSize)
     {
+        if (!cam.orthographic) return;
+
         float worldWidth = widthCells * cellSize;
         float worldHeight = heightCells * cellSize;
 
@@ -42,6 +44,7 @@ public class TopDownCamera : MonoBehaviour
 
         Vector3 center = new Vector3(worldWidth / 2f - cellSize / 2f, 20f, -(worldHeight / 2f - cellSize / 2f));
         transform.position = center;
+        transform.rotation = Quaternion.Euler(90f, 0f, 0f); // mirando hacia abajo
     }
 
     void Update()
@@ -55,6 +58,8 @@ public class TopDownCamera : MonoBehaviour
             transform.position += new Vector3(-delta.x, 0, -delta.y) * panSpeed;
             lastMousePosition = Input.mousePosition;
         }
+
+        if (!cam.orthographic) return;
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - scroll * zoomSpeed, minZoom, maxZoom);

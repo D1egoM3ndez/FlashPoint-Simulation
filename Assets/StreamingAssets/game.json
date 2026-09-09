@@ -1,0 +1,1096 @@
+[
+  {
+    "turn": 0,
+    "status": "in_progress",
+    "actor": null,
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 0,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": null,
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [7, 3],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [7, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [3, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [4, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": [
+      {
+        "pos": [2, 4],
+        "kind": "VICTIM",
+        "revealed": false
+      },
+      {
+        "pos": [5, 1],
+        "kind": "VICTIM",
+        "revealed": false
+      },
+      {
+        "pos": [5, 8],
+        "kind": "FALSE",
+        "revealed": false
+      }
+    ]
+  },
+  {
+    "turn": 1,
+    "status": "in_progress",
+    "actor": {
+      "id": 0,
+      "start_pos": [7, 3],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "reveal",
+          "kind": "VICTIM"
+        }
+      ],
+      "action_count": 5,
+      "ap_spent": 4
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 0,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": {
+      "ignited_count": 2,
+      "ignited_cells": [
+        [4, 3],
+        [4, 5]
+      ],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 1
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [5, 1],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [7, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [3, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [4, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": [
+      {
+        "pos": [5, 1],
+        "kind": "VICTIM",
+        "revealed": true
+      }
+    ]
+  },
+  {
+    "turn": 2,
+    "status": "in_progress",
+    "actor": {
+      "id": 1,
+      "start_pos": [7, 4],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "extinguish",
+          "state": "FIRE",
+          "pos": [3, 4]
+        }
+      ],
+      "action_count": 5,
+      "ap_spent": 5
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 0,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": {
+      "ignited_count": 1,
+      "ignited_cells": [
+        [4, 2]
+      ],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 0
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [5, 1],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [3, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [3, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [4, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": [
+      {
+        "pos": [5, 1],
+        "kind": "VICTIM",
+        "revealed": true
+      }
+    ]
+  },
+  {
+    "turn": 3,
+    "status": "in_progress",
+    "actor": {
+      "id": 2,
+      "start_pos": [3, 9],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "door",
+          "direction": "LEFT"
+        }
+      ],
+      "action_count": 5,
+      "ap_spent": 5
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 0,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": {
+      "ignited_count": 0,
+      "ignited_cells": [],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 0
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_OPEN", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [5, 1],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [3, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [1, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [4, 9],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": [
+      {
+        "pos": [5, 1],
+        "kind": "VICTIM",
+        "revealed": true
+      }
+    ]
+  },
+  {
+    "turn": 4,
+    "status": "in_progress",
+    "actor": {
+      "id": 3,
+      "start_pos": [4, 9],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "move",
+          "direction": "LEFT"
+        },
+        {
+          "action": "extinguish",
+          "state": "SMOKE",
+          "pos": [2, 7]
+        }
+      ],
+      "action_count": 5,
+      "ap_spent": 4
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 0,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": {
+      "ignited_count": 1,
+      "ignited_cells": [
+        [3, 7]
+      ],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 0
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_OPEN", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [5, 1],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [3, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [1, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [2, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": [
+      {
+        "pos": [5, 1],
+        "kind": "VICTIM",
+        "revealed": true
+      }
+    ]
+  },
+  {
+    "turn": 5,
+    "status": "in_progress",
+    "actor": {
+      "id": 0,
+      "start_pos": [5, 1],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "DOWN"
+        },
+        {
+          "action": "move",
+          "direction": "DOWN"
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        }
+      ],
+      "action_count": 4,
+      "ap_spent": 4
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 1,
+      "victims_lost": 0,
+      "false_alarms_found": 0
+    },
+    "fire_event": {
+      "ignited_count": 0,
+      "ignited_cells": [],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 0
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_OPEN", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [7, 3],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [3, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [1, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [2, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [0, 5],
+        "role": "rescue",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": []
+  },
+  {
+    "turn": 6,
+    "status": "in_progress",
+    "actor": {
+      "id": 4,
+      "start_pos": [0, 5],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "DOWN"
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        },
+        {
+          "action": "reveal",
+          "kind": "FALSE"
+        }
+      ],
+      "action_count": 5,
+      "ap_spent": 4
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 1,
+      "victims_lost": 0,
+      "false_alarms_found": 1
+    },
+    "fire_event": {
+      "ignited_count": 2,
+      "ignited_cells": [
+        [2, 6],
+        [3, 7]
+      ],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 1
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_OPEN", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [7, 3],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [3, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [1, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [2, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [1, 8],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": []
+  },
+  {
+    "turn": 7,
+    "status": "in_progress",
+    "actor": {
+      "id": 1,
+      "start_pos": [3, 4],
+      "actions": [
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "move",
+          "direction": "UP"
+        },
+        {
+          "action": "extinguish",
+          "state": "FIRE",
+          "pos": [1, 2]
+        },
+        {
+          "action": "move",
+          "direction": "RIGHT"
+        }
+      ],
+      "action_count": 4,
+      "ap_spent": 5
+    },
+    "score": {
+      "damage_total": 0,
+      "victims_rescued": 1,
+      "victims_lost": 0,
+      "false_alarms_found": 1
+    },
+    "fire_event": {
+      "ignited_count": 1,
+      "ignited_cells": [
+        [5, 5]
+      ],
+      "lost_poi_count": 0,
+      "lost_pois": [],
+      "damage_added": 0
+    },
+    "board": {
+      "cells": [
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "CLEAR", "FIRE", "CLEAR", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "FIRE", "FIRE", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "FIRE", "CLEAR", "CLEAR", "CLEAR"],
+        ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+      ],
+      "walls": {
+        "horizontal": [
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["WALL", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "WALL", "CLEAR", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "WALL", "CLEAR", "DOOR_OPEN", "CLEAR", "CLEAR", "WALL"],
+          ["DOOR_OPEN", "CLEAR", "DOOR_CLOSE", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL"],
+          ["WALL", "CLEAR", "WALL", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_OPEN"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "WALL", "CLEAR", "WALL", "WALL"],
+          ["WALL", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "DOOR_CLOSE", "CLEAR", "DOOR_CLOSE", "WALL"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"]
+        ],
+        "vertical": [
+          ["CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "WALL", "WALL", "WALL", "WALL", "WALL", "DOOR_CLOSE", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "WALL", "DOOR_CLOSE", "WALL", "WALL", "WALL", "WALL", "CLEAR"],
+          ["CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR", "CLEAR"],
+          ["CLEAR", "WALL", "WALL", "DOOR_OPEN", "WALL", "WALL", "WALL", "WALL", "WALL", "CLEAR"]
+        ]
+      }
+    },
+    "firefighters": [
+      {
+        "id": 0,
+        "pos": [7, 3],
+        "role": "evacuation",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": true,
+        "knocked_down": false
+      },
+      {
+        "id": 1,
+        "pos": [1, 4],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 2,
+        "pos": [1, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 3,
+        "pos": [2, 7],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 4,
+        "pos": [1, 8],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      },
+      {
+        "id": 5,
+        "pos": [0, 6],
+        "role": "fire_suppression",
+        "ap": 0,
+        "saved_ap": 0,
+        "carrying": false,
+        "knocked_down": false
+      }
+    ],
+    "pois": []
+  }
+]
