@@ -105,5 +105,5 @@ continuación se mencionan estas partes.
 **Arte**
 Uso de IA para la generación de la pantalla de juego principal
 
-**Assets**
+## Assets
 [Kenney](https://kenney.nl/assets/graveyard-kit)
