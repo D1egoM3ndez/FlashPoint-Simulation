@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flashpoint Simulación
 
 Simulación basada en el juego Flash Point: Fire Rescue. La lógica multiagente está
@@ -130,3 +131,6 @@ fue generada con IA.
 **`README.md`**
 
 - La IA se utilizó como ayuda para redactar este README.
+=======
+Hello World
+>>>>>>> c6fd32b36572ffa326286198bd594b9d48d0e547
