@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pausePanel;
-    public PlaybackController playback;
+    public GameManager playback;
 
     bool isPaused = false;
 
@@ -42,19 +42,43 @@ public class PauseMenu : MonoBehaviour
         TogglePause();
     }
 
+    // "Reiniciar": misma lógica que la tarjeta de fin -> re-corre con seed nueva.
     public void OnClickRestart()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ClosePause();
+
+        StartScreen ss = FindAnyObjectByType<StartScreen>(FindObjectsInactive.Include);
+        if (ss != null)
+            ss.RestartWithNewSeed();
+        else
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);   // fallback
     }
 
+    // "Salir": vuelve a la pantalla principal (no cierra la app).
     public void OnClickQuit()
     {
-        Time.timeScale = 1f;
+        ClosePause();
+
+        StartScreen ss = FindAnyObjectByType<StartScreen>(FindObjectsInactive.Include);
+        if (ss != null)
+        {
+            ss.BackToMenu();
+            return;
+        }
+
+        // fallback si no hay pantalla de inicio en la escena
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
+    }
+
+    void ClosePause()
+    {
+        isPaused = false;
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

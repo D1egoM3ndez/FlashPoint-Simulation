@@ -1,4 +1,4 @@
-// PlaybackController.cs
+// GameManager.cs
 // Control de playback: navegar entre turnos del JSON y renderizar.
 // "Siguiente" reproduce el turno con animación: el bombero que actuó camina
 // hasta su casilla final y, al terminar, aparecen los ghosts/zombies nuevos
@@ -6,7 +6,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlaybackController : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [Header("Referencias")]
     public BoardBuilder boardBuilder;
@@ -157,6 +157,17 @@ public class PlaybackController : MonoBehaviour
         LoadTurn(jsonLoader.TurnCount - 1);
     }
 
+    // Deja el playback en cero para poder volver a arrancar (StartPlayback) con
+    // otra simulación, o volver a la pantalla de inicio.
+    public void ResetPlayback()
+    {
+        CancelAnimation();
+        Stop();
+        initialized = false;
+        useJson = false;
+        currentTurn = 0;
+    }
+
     public void Play()
     {
         isPlaying = true;
@@ -195,7 +206,10 @@ public class PlaybackController : MonoBehaviour
     public string GetTurnLabel()
     {
         if (!useJson) return "—";
-        return $"Turno {currentTurn + 1} / {jsonLoader.TurnCount}";
+        // currentTurn == índice del snapshot == data.turn. El snapshot 0 es el
+        // estado inicial, así que los turnos reales son TurnCount - 1.
+        int total = Mathf.Max(0, jsonLoader.TurnCount - 1);
+        return $"Turno {currentTurn} / {total}";
     }
 
     // ── Reproducción animada de un turno ──
@@ -211,6 +225,10 @@ public class PlaybackController : MonoBehaviour
 
         BoardData cur = jsonLoader.GetTurn(index);
         if (cur == null) yield break;
+
+        // Turno y "Agente N" se actualizan YA, al arrancar la animación (el resto
+        // del HUD —stats, tarjetas— se fija al final del turno).
+        if (uiManager != null) uiManager.SetTurnInfo(cur);
 
         // En pantalla sigue renderizado el turno anterior (index - 1), con cada
         // bombero en la casilla donde terminó (= casilla de salida del actor de

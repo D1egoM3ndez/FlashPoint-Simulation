@@ -16,33 +16,45 @@ public class JsonLoader : MonoBehaviour
 
     [HideInInspector] public List<BoardData> turns = new List<BoardData>();
     [HideInInspector] public bool isLoaded = false;
+    [HideInInspector] public bool loadFailed = false;
+    [HideInInspector] public string loadStatus = "";
 
-    public void LoadWithSeed(int seed)
+    public void LoadWithSeed(int seed)       { BeginLoad(seed, false); }
+    public void LoadWithSeedRandom(int seed) { BeginLoad(seed, true); }
+
+    void BeginLoad(int seed, bool useRandom)
     {
-        StartCoroutine(LoadFromServer(seed));
+        StopAllCoroutines();
+        isLoaded = false;
+        loadFailed = false;
+        loadStatus = "";
+        turns.Clear();
+        StartCoroutine(LoadFromServer(seed, useRandom));
     }
 
-    IEnumerator LoadFromServer(int seed)
+    IEnumerator LoadFromServer(int seed, bool useRandom)
     {
-        string url = $"{serverUrl}/run-sim?seed={seed}";
+        string endpoint = useRandom ? "/run-sim-rand" : "/run-sim";
+        string url = $"{serverUrl}{endpoint}?seed={seed}";
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.timeout = 30;
             yield return request.SendWebRequest();
 
-            if (request.result == UnityWebRequest.Result.ConnectionError ||
-                request.result == UnityWebRequest.Result.ProtocolError)
+            if (request.result != UnityWebRequest.Result.Success)
             {
                 LoadFromFile();
                 yield break;
             }
 
-            string json = request.downloadHandler.text;
-            turns = BoardDataConverter.ParseJsonArray(json);
+            turns = BoardDataConverter.ParseJsonArray(request.downloadHandler.text);
 
             if (turns.Count == 0)
+            {
+                LoadFromFile();
                 yield break;
+            }
 
             isLoaded = true;
         }
@@ -53,15 +65,26 @@ public class JsonLoader : MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, fileName + ".json");
 
         if (!File.Exists(path))
+        {
+            Fail($"No hay server y no existe {path}");
             return;
+        }
 
-        string json = File.ReadAllText(path);
-        turns = BoardDataConverter.ParseJsonArray(json);
+        turns = BoardDataConverter.ParseJsonArray(File.ReadAllText(path));
 
         if (turns.Count == 0)
+        {
+            Fail($"{fileName}.json no se pudo parsear (0 turnos).");
             return;
+        }
 
         isLoaded = true;
+    }
+
+    void Fail(string reason)
+    {
+        loadFailed = true;
+        loadStatus = reason;
     }
 
     public BoardData GetTurn(int index)

@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text playbackLabel;
 
     [Header("Playback")]
-    public PlaybackController playback;
+    public GameManager playback;
 
     [Header("Auto-layout")]
     [Tooltip("Reconstruye el HUD al arrancar (ignora las posiciones de la escena).")]
@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     static readonly Color GreenC    = new Color(0.48f, 0.90f, 0.55f, 1f);
     static readonly Color RedC      = new Color(0.97f, 0.44f, 0.38f, 1f);
     static readonly Color BtnBg     = new Color(0.10f, 0.09f, 0.16f, 0.62f);  // fondo de botón de playback
-    static readonly Color HudPill   = new Color(0.05f, 0.04f, 0.09f, 0.82f);  // fondo detrás de los textos del HUD
+    static readonly Color HudPill   = new Color(0.02f, 0.02f, 0.05f, 0.92f);  // fondo detrás de los textos del HUD
     static readonly Color BtnAccent = new Color(0.30f, 0.24f, 0.46f, 0.95f);  // botón central (menú de pausa)
     static readonly Color PurpleBtn   = new Color(0.22f, 0.19f, 0.33f, 1f);   // relleno botones de pausa
     static readonly Color PurpleBtnHi = new Color(0.33f, 0.27f, 0.48f, 1f);   // relleno del botón principal (Reanudar)
@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
 
     RectTransform barRT;
     RectTransform hudRoot;   // contiene todo el HUD; oculto hasta ShowHud()
+    TMP_Text agentText;      // "Agente N": bombero que se mueve este turno
 
     // Menús de estado (pausa / victoria / derrota): solo título + botones.
     GameObject victoryPanel, defeatPanel;
@@ -84,8 +85,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHUD(BoardData data)
     {
-        if (turnText != null)
-            turnText.text = playback != null ? playback.GetTurnLabel() : $"Turno {data.turn}";
+        SetTurnInfo(data);
 
         if (rescuedText != null)
             rescuedText.text = $"{data.victimsRescued} / {soulsToRescue}";
@@ -102,6 +102,17 @@ public class UIManager : MonoBehaviour
 
         UpdateStateCards(data);
         UpdatePlaybackLabel();
+    }
+
+    // Solo el turno y el "Agente N": GameManager lo llama al ARRANCAR la
+    // animación del turno para que no queden un paso atrás.
+    public void SetTurnInfo(BoardData data)
+    {
+        if (turnText != null)
+            turnText.text = playback != null ? playback.GetTurnLabel() : $"Turno {data.turn}";
+
+        if (agentText != null)
+            agentText.text = data.actor != null ? $"Agente {data.actor.id}" : "";
     }
 
     public void UpdatePlaybackLabel()
@@ -136,18 +147,24 @@ public class UIManager : MonoBehaviour
         barRT.sizeDelta = new Vector2(-24f, 96f);
         barRT.anchoredPosition = new Vector2(0f, -6f);
 
-        // ---- turno (izquierda, con degradado y brillo) ----
+        // ---- turno (izquierda, con degradado y brillo) + agente que se mueve ----
         if (turnText != null)
         {
             Reparent(turnText, barRT);
             Place(turnText.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f),
-                new Vector2(20f, -12f), new Vector2(280f, 44f));
-            StyleText(turnText, 30f, LogoGreen, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+                new Vector2(20f, -6f), new Vector2(300f, 42f));
+            StyleText(turnText, 34f, LogoGreen, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
             turnText.characterSpacing = 3f;
             ApplyGradient(turnText, LogoGreen, CyanC);
             ApplyGlow(turnText, LogoGreen, 0.4f);
 
-            BarPill(new Vector2(0f, 1f), new Vector2(10f, -8f), new Vector2(246f, 52f));
+            agentText = NewText("HUD_Agent", barRT, "", 15f, CyanC,
+                                TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            agentText.characterSpacing = 2f;
+            Place(agentText.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f),
+                new Vector2(22f, -50f), new Vector2(260f, 20f));
+
+            BarPill(new Vector2(0f, 1f), new Vector2(10f, -2f), new Vector2(274f, 72f));
         }
 
         // ---- estadísticas: bloques anclados a la derecha (no chocan con el turno) ----
@@ -189,6 +206,14 @@ public class UIManager : MonoBehaviour
     public void ShowHud()
     {
         if (hudRoot != null) hudRoot.gameObject.SetActive(true);
+    }
+
+    // Oculta el HUD y las tarjetas de victoria/derrota (volver al menú / reiniciar).
+    public void HideHud()
+    {
+        if (hudRoot != null) hudRoot.gameObject.SetActive(false);
+        if (victoryPanel != null) victoryPanel.SetActive(false);
+        if (defeatPanel != null) defeatPanel.SetActive(false);
     }
 
     // ───────────────────────── Tarjetas de estado ─────────────────────────
@@ -254,7 +279,7 @@ public class UIManager : MonoBehaviour
         rt.sizeDelta = new Vector2(244f, 44f);
         rt.anchoredPosition = new Vector2(0f, y);
 
-        // Los tres botones en morado (como antes); "Reanudar" un poco más claro.
+        // Los tres botones con el mismo morado claro.
         Image img = b.GetComponent<Image>();
         if (img != null)
         {
@@ -279,7 +304,7 @@ public class UIManager : MonoBehaviour
         Image fimg = fill.GetComponent<Image>();
         fimg.sprite = RoundedSprite();
         fimg.type = Image.Type.Sliced;
-        fimg.color = primary ? PurpleBtnHi : PurpleBtn;
+        fimg.color = PurpleBtnHi;
         fimg.raycastTarget = false;
 
         TMP_Text t = b.GetComponentInChildren<TMP_Text>(true);
@@ -292,8 +317,7 @@ public class UIManager : MonoBehaviour
             trt.anchorMax = Vector2.one;
             trt.offsetMin = Vector2.zero;
             trt.offsetMax = Vector2.zero;
-            StyleText(t, primary ? 16f : 15f,
-                      primary ? Color.white : new Color(0.88f, 0.86f, 0.94f),
+            StyleText(t, primary ? 16f : 15f, Color.white,
                       TextAlignmentOptions.Center, FontStyles.Bold);
             t.characterSpacing = 4f;
         }
@@ -302,14 +326,15 @@ public class UIManager : MonoBehaviour
     void BuildEndScreens(RectTransform canvas, PauseMenu pm)
     {
         if (canvas == null) return;
-        victoryPanel = BuildEndCard(canvas, "VictoryPanel", GreenC, "TURNO COMPLETO", "Siguiente turno", pm);
-        defeatPanel = BuildEndCard(canvas, "DefeatPanel", RedC, "TURNO FALLIDO", "Reintentar", pm);
+        StartScreen ss = FindAnyObjectByType<StartScreen>();
+        victoryPanel = BuildEndCard(canvas, "VictoryPanel", GreenC, "TURNO COMPLETO", "Nueva partida", pm, ss);
+        defeatPanel = BuildEndCard(canvas, "DefeatPanel", RedC, "TURNO FALLIDO", "Reintentar", pm, ss);
         if (victoryPanel != null) victoryPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(false);
     }
 
     GameObject BuildEndCard(Transform canvas, string name, Color accent, string title,
-                            string mainLabel, PauseMenu pm)
+                            string mainLabel, PauseMenu pm, StartScreen ss)
     {
         RectTransform panel = NewRect(name, canvas);
         panel.anchorMin = Vector2.zero;
@@ -323,16 +348,26 @@ public class UIManager : MonoBehaviour
         Vector2 size = new Vector2(340f, 190f);
         RectTransform card = BuildCardBase(panel, name + "_Card", size, accent, title, out float y);
 
+        // Botón de arriba: reiniciar la simulación con una seed nueva.
         Button main = MakeCardButton(card, mainLabel, accent, true);
         Place((RectTransform)main.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
               new Vector2(0f, y), new Vector2(238f, 46f));
-        main.onClick.AddListener(() => { if (pm != null) pm.OnClickRestart(); });
+        main.onClick.AddListener(() =>
+        {
+            if (ss != null) ss.RestartWithNewSeed();
+            else if (pm != null) pm.OnClickRestart();
+        });
         y -= 56f;
 
+        // Botón de abajo: volver a la pantalla principal.
         Button exit = MakeCardButton(card, "Salir", new Color(0.62f, 0.58f, 0.72f, 1f), false);
         Place((RectTransform)exit.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
               new Vector2(0f, y), new Vector2(160f, 38f));
-        exit.onClick.AddListener(() => { if (pm != null) pm.OnClickQuit(); });
+        exit.onClick.AddListener(() =>
+        {
+            if (ss != null) ss.BackToMenu();
+            else if (pm != null) pm.OnClickQuit();
+        });
 
         return panel.gameObject;
     }
@@ -403,13 +438,15 @@ public class UIManager : MonoBehaviour
         return img;
     }
 
+    // `accent` se ignora: los botones de victoria/derrota usan el mismo morado
+    // que los del menú de pausa. `solid` solo cambia el tamaño de la fuente.
     Button MakeCardButton(Transform parent, string label, Color accent, bool solid)
     {
         RectTransform rt = NewRect("Btn_" + label, parent);
         Image bg = rt.gameObject.AddComponent<Image>();
         bg.sprite = RoundedSprite();
         bg.type = Image.Type.Sliced;
-        bg.color = new Color(accent.r, accent.g, accent.b, solid ? 0.85f : 0.40f);
+        bg.color = PurpleEdge;
         bg.raycastTarget = true;
         Button b = rt.gameObject.AddComponent<Button>();
         b.targetGraphic = bg;
@@ -422,15 +459,11 @@ public class UIManager : MonoBehaviour
         Image fi = inner.gameObject.AddComponent<Image>();
         fi.sprite = RoundedSprite();
         fi.type = Image.Type.Sliced;
-        fi.color = solid
-            ? new Color(accent.r * 0.32f, accent.g * 0.32f, accent.b * 0.32f, 1f)
-            : new Color(0.14f, 0.12f, 0.20f, 1f);
+        fi.color = PurpleBtnHi;
         fi.raycastTarget = false;
 
         TMP_Text t = NewText("Btn_" + label + "_T", inner, label.ToUpperInvariant(),
-                             solid ? 16f : 13f,
-                             solid ? new Color(accent.r, accent.g, accent.b, 1f)
-                                   : new Color(0.86f, 0.82f, 0.92f),
+                             solid ? 16f : 15f, Color.white,
                              TextAlignmentOptions.Center, FontStyles.Bold);
         t.characterSpacing = 4f;
         RectTransform trt = t.rectTransform;

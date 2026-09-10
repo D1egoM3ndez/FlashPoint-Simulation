@@ -9,9 +9,8 @@ public class BoardBuilder : MonoBehaviour
     public float cellSize = 2f;
 
     [Header("Animación")]
-    public float hazardPopTime = 0.25f;   // duración del "pop" al aparecer un ghost/zombie
+    public float hazardPopTime = 0.25f;
 
-    // Agentes vivos indexados por id, para poder animarlos entre turnos.
     readonly Dictionary<int, GameObject> agentById = new Dictionary<int, GameObject>();
 
     [Header("Prefabs")]
@@ -20,15 +19,15 @@ public class BoardBuilder : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject doorOpenPrefab;
     public GameObject doorClosedPrefab;
-    public GameObject zombiePrefab;       // amenaza que se propaga (antes era firePrefab)
-    public GameObject ghostPrefab;        // obstaculo que se propaga (antes era smokePrefab)
+    public GameObject zombiePrefab;
+    public GameObject ghostPrefab;
     public GameObject poiUnknownPrefab;
     public GameObject poiVictimPrefab;
     public GameObject poiFalsePrefab;
-    public GameObject agentPrefab;        // cazafantasmas (1 solo tipo de agente)
-    public GameObject sparkPrefab;        // chispas al spawn de zombie/ghost
+    public GameObject agentPrefab;
+    public GameObject sparkPrefab;
 
-    [Header("Contenedores (los del Paso 2)")]
+    [Header("Contenedores")]
     public Transform floorParent;
     public Transform wallsParent;
     public Transform doorsParent;
@@ -39,11 +38,6 @@ public class BoardBuilder : MonoBehaviour
 
     bool cameraFitted = false;
 
-    void Start()
-    {
-        // PlaybackController controla la carga del JSON.
-    }
-
     public void FitCamera(int width, int height)
     {
         if (cameraFitted) return;
@@ -52,8 +46,6 @@ public class BoardBuilder : MonoBehaviour
         if (cam != null)
             cam.FitToBoard(width, height, cellSize);
     }
-
-    // ---- posiciones -------------------------------------------------------
 
     Vector3 CellCenter(int row, int col)
     {
@@ -64,8 +56,6 @@ public class BoardBuilder : MonoBehaviour
     {
         return row == 0 || row == height - 1 || col == 0 || col == width - 1;
     }
-
-    // ---- dibujar ------------------------------------------------------------
 
     public void Render(BoardData data)
     {
@@ -87,8 +77,6 @@ public class BoardBuilder : MonoBehaviour
 
             PlaceEdge(cell.row, cell.col, "Up", cell.wallUp, center);
             PlaceEdge(cell.row, cell.col, "Left", cell.wallLeft, center);
-            // Down/Right tambien se dibujan para no dejar huecos en el
-            // borde final de la grilla (fila/columna mas alta)
             PlaceEdge(cell.row, cell.col, "Down", cell.wallDown, center);
             PlaceEdge(cell.row, cell.col, "Right", cell.wallRight, center);
 
@@ -115,8 +103,6 @@ public class BoardBuilder : MonoBehaviour
             agentById[agent.id] = go;
         }
     }
-
-    // ---- API de animación (usada por PlaybackController) -----------------
 
     public Vector3 CellWorld(int row, int col)
     {
@@ -145,7 +131,6 @@ public class BoardBuilder : MonoBehaviour
         }
     }
 
-    // Instancia un ghost (SMOKE) o zombie (FIRE) en la celda con un "pop".
     public void SpawnHazardAnimated(int row, int col, string state)
     {
         bool smoke = state == "SMOKE";
@@ -174,7 +159,7 @@ public class BoardBuilder : MonoBehaviour
         {
             e += Time.deltaTime;
             float k = Mathf.Clamp01(e / time);
-            float overshoot = 1f + 0.15f * Mathf.Sin(k * Mathf.PI);   // rebote suave
+            float overshoot = 1f + 0.15f * Mathf.Sin(k * Mathf.PI);
             t.localScale = target * (k * overshoot);
             yield return null;
         }
@@ -183,10 +168,10 @@ public class BoardBuilder : MonoBehaviour
 
     void PlaceEdge(int row, int col, string side, string wallState, Vector3 center)
     {
-        if (wallState == "CLEAR") return; // nada que dibujar
+        if (wallState == "CLEAR") return;
 
         Vector3 pos = center;
-        bool vertical = side == "Left" || side == "Right"; // pared corre en Z, no en X
+        bool vertical = side == "Left" || side == "Right";
 
         switch (side)
         {
@@ -195,7 +180,7 @@ public class BoardBuilder : MonoBehaviour
             case "Left":  pos += new Vector3(-cellSize / 2f, 0, 0); break;
             case "Right": pos += new Vector3(cellSize / 2f, 0, 0); break;
         }
-        pos.y = 0.75f; // mitad de la altura de la pared
+        pos.y = 0.75f;
 
         bool isDoor = wallState == "DOOR_OPEN" || wallState == "DOOR_CLOSE";
         GameObject prefab = wallPrefab;
@@ -206,14 +191,10 @@ public class BoardBuilder : MonoBehaviour
             parent = doorsParent;
         }
 
-        // Tanto la reja (pared) como la tumba (puerta) son modelos con su propia proporcion,
-        // no placas planas simetricas: intercambiar los ejes X/Z de la escala para las paredes
-        // verticales las deformaba (estiraba postes/tumba en vez de solo alargar el tramo).
-        // Se mantiene siempre la misma escala "natural" y se rota 90 grados para Left/Right.
         Quaternion rot = vertical ? Quaternion.Euler(0, 90f, 0) : Quaternion.identity;
         GameObject go = Instantiate(prefab, pos, rot, parent);
         if (!isDoor)
-            go.transform.localScale = new Vector3(cellSize, 1.5f, 0.15f); // la reja si necesita alargarse al tamano de celda
+            go.transform.localScale = new Vector3(cellSize, 1.5f, 0.15f);
     }
 
     void Clear(Transform parent)
