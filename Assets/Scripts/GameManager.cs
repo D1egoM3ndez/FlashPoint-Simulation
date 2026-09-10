@@ -6,36 +6,70 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Orquesta la reproducción de la simulación: navega por los turnos cargados por
+/// <see cref="JsonLoader"/>, los envía a <see cref="BoardBuilder"/> para su render y coordina
+/// la animación turno a turno y la actualización del HUD.
+/// </summary>
+/// <remarks>
+/// <para>Ciclo de vida: <see cref="StartPlayback"/> (una sola vez) fija el turno 0 y arranca
+/// el avance automático; <see cref="Update"/> avanza según <see cref="playInterval"/> salvo
+/// que haya una animación en curso; <see cref="ResetPlayback"/> deja el componente listo para
+/// otra simulación.</para>
+/// <para>La bandera <see cref="isAnimating"/> bloquea el avance automático mientras corre
+/// <see cref="AnimateTurn(int)"/>. <see cref="currentTurn"/> se confirma al destino en cuanto
+/// arranca la animación, de modo que cancelarla no repite el turno.</para>
+/// </remarks>
 public class GameManager : MonoBehaviour
 {
+    /// <summary>Constructor visual del tablero. Si es <c>null</c> se busca en el mismo GameObject.</summary>
     [Header("Referencias")]
     public BoardBuilder boardBuilder;
+    /// <summary>Gestor del HUD; opcional (se comprueba <c>null</c> antes de usarlo).</summary>
     public UIManager uiManager;
 
+    /// <summary>Segundos entre avances automáticos de turno.</summary>
     [Header("Play automático")]
     public float playInterval = 1.0f;
+    /// <summary>Si <c>true</c>, empieza reproduciendo al inicializar el playback.</summary>
     public bool autoPlayOnStart = false;
+    /// <summary>Fuerza el arranque en reproducción aunque <see cref="autoPlayOnStart"/> sea <c>false</c>.</summary>
     [Tooltip("Arranca reproduciendo aunque autoPlayOnStart esté en false.")]
     public bool playOnLoadAlways = true;
 
+    /// <summary>Si <c>true</c>, cada avance usa <see cref="AnimateTurn(int)"/>; si <c>false</c>, salto instantáneo.</summary>
     [Header("Animación de turno")]
     public bool animateTurns = true;
+    /// <summary>Duración del desplazamiento del bombero por cada casilla.</summary>
     public float stepSeconds = 0.22f;        // por casilla que avanza el bombero
+    /// <summary>Pausa tras cada paso (para que la luz/estado sea visible).</summary>
     public float afterStepSeconds = 0.15f;   // pausa entre cada paso (luz visible)
+    /// <summary>Pausa al llegar el bombero a su casilla final.</summary>
     public float afterMoveSeconds = 0.25f;   // pausa al llegar a la casilla final
+    /// <summary>Espera entre la aparición de cada hazard nuevo.</summary>
     public float hazardStagger = 0.14f;      // espera entre cada aparición
+    /// <summary>Pausa tras aparecer todos los hazards, antes de fijar el estado final.</summary>
     public float afterHazardSeconds = 0.35f; // pausa antes de fijar el estado final
 
+    /// <summary>Índice del turno mostrado (o confirmado como destino de la animación en curso).</summary>
     [HideInInspector] public int currentTurn = 0;
+    /// <summary><c>true</c> mientras el avance automático está activo.</summary>
     [HideInInspector] public bool isPlaying = false;
+    /// <summary><c>true</c> mientras <see cref="AnimateTurn(int)"/> está en ejecución.</summary>
     [HideInInspector] public bool isAnimating = false;
+    /// <summary><c>true</c> una vez que hay una simulación cargada y el playback inicializado.</summary>
     [HideInInspector] public bool useJson = false;
 
+    /// <summary>Acumulador de tiempo para el avance automático.</summary>
     float playTimer = 0f;
+    /// <summary>Fuente de los turnos; se obtiene del mismo GameObject en <see cref="Start"/>.</summary>
     JsonLoader jsonLoader;
+    /// <summary>Evita reinicializar el playback en llamadas repetidas a <see cref="StartPlayback"/>.</summary>
     bool initialized = false;
+    /// <summary>Referencia a la corrutina de animación de turno en curso, o <c>null</c>.</summary>
     Coroutine animCo;   // animación de turno en curso (si la hay)
 
+    /// <summary>Resuelve las referencias a <see cref="JsonLoader"/> y <see cref="BoardBuilder"/> del GameObject.</summary>
     void Start()
     {
         jsonLoader = GetComponent<JsonLoader>();
@@ -43,6 +77,11 @@ public class GameManager : MonoBehaviour
             boardBuilder = GetComponent<BoardBuilder>();
     }
 
+    /// <summary>
+    /// Inicializa el playback: muestra el HUD, renderiza el turno 0, encuadra la cámara y,
+    /// según configuración, arranca la reproducción.
+    /// </summary>
+    /// <remarks>No hace nada si ya se inicializó o si <see cref="JsonLoader"/> no tiene datos cargados.</remarks>
     public void StartPlayback()
     {
         if (initialized) return;
@@ -56,6 +95,8 @@ public class GameManager : MonoBehaviour
         if (autoPlayOnStart || playOnLoadAlways) Play();
     }
 
+    /// <summary>Avanza el temporizador y dispara <see cref="NextTurn"/> al alcanzar <see cref="playInterval"/>.</summary>
+    /// <remarks>Inactivo si no se ha inicializado, si no hay reproducción activa o si hay una animación en curso.</remarks>
     void Update()
     {
         if (!initialized) return;
@@ -72,6 +113,8 @@ public class GameManager : MonoBehaviour
 
     // ── Render instantáneo ──
 
+    /// <summary>Renderiza el turno <paramref name="index"/> de inmediato (sin animación) y actualiza el HUD.</summary>
+    /// <param name="index">Índice del turno; si está fuera de rango, no hace nada.</param>
     public void LoadTurn(int index)
     {
         if (!useJson) return;
@@ -88,6 +131,15 @@ public class GameManager : MonoBehaviour
 
     // ── Navegación ──
 
+    /// <summary>
+    /// Detiene la animación de turno en curso, si la hay, y deja el tablero en el estado final
+    /// del turno destino (<see cref="currentTurn"/>).
+    /// </summary>
+    /// <remarks>
+    /// Necesario porque la corrutina no fija el estado final si se interrumpe: sin esto,
+    /// navegar durante una animación dejaba <see cref="isAnimating"/> en <c>true</c> y la
+    /// reproducción bloqueada.
+    /// </remarks>
     // Corta la animación de turno en curso (si la hay) y deja el estado listo
     // para navegar. Sin esto, pulsar una flecha mientras un turno se reproduce
     // no hacía nada (isAnimating seguía en true) y, si la corrutina se cortaba
@@ -108,6 +160,12 @@ public class GameManager : MonoBehaviour
         isAnimating = false;
     }
 
+    /// <summary>Avanza al siguiente turno. Si se supera el último, detiene la reproducción.</summary>
+    /// <remarks>
+    /// Con <see cref="animateTurns"/> activo y el juego sin pausar (<see cref="Time.timeScale"/> &gt; 0)
+    /// lanza <see cref="AnimateTurn(int)"/> y confirma <see cref="currentTurn"/> al destino de
+    /// inmediato; en caso contrario hace un salto instantáneo con <see cref="LoadTurn(int)"/>.
+    /// </remarks>
     public void NextTurn()
     {
         if (!useJson) return;
@@ -135,6 +193,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>Retrocede un turno (con salto instantáneo). No hace nada en el turno 0.</summary>
     public void PrevTurn()
     {
         if (!useJson) return;
@@ -143,6 +202,7 @@ public class GameManager : MonoBehaviour
             LoadTurn(currentTurn - 1);
     }
 
+    /// <summary>Salta al primer turno (índice 0).</summary>
     public void FirstTurn()
     {
         if (!useJson) return;
@@ -150,6 +210,7 @@ public class GameManager : MonoBehaviour
         LoadTurn(0);
     }
 
+    /// <summary>Salta al último turno cargado.</summary>
     public void LastTurn()
     {
         if (!useJson) return;
@@ -157,6 +218,10 @@ public class GameManager : MonoBehaviour
         LoadTurn(jsonLoader.TurnCount - 1);
     }
 
+    /// <summary>
+    /// Detiene la reproducción y restablece el estado interno para poder volver a
+    /// <see cref="StartPlayback"/> con otra simulación o regresar a la pantalla de inicio.
+    /// </summary>
     // Deja el playback en cero para poder volver a arrancar (StartPlayback) con
     // otra simulación, o volver a la pantalla de inicio.
     public void ResetPlayback()
@@ -168,18 +233,21 @@ public class GameManager : MonoBehaviour
         currentTurn = 0;
     }
 
+    /// <summary>Activa el avance automático desde el turno actual.</summary>
     public void Play()
     {
         isPlaying = true;
         playTimer = 0f;
     }
 
+    /// <summary>Detiene el avance automático.</summary>
     public void Stop()
     {
         isPlaying = false;
         playTimer = 0f;
     }
 
+    /// <summary>Alterna entre <see cref="Play"/> y <see cref="Stop"/>.</summary>
     public void TogglePlay()
     {
         if (isPlaying) Stop(); else Play();
@@ -190,11 +258,20 @@ public class GameManager : MonoBehaviour
     // Las flechas navegan pero NO pausan: si la simulación venía corriendo,
     // sigue corriendo desde el turno al que saltaste. Se resetea el timer para
     // dar un intervalo completo de margen antes del siguiente avance automático.
+
+    /// <summary>Handler de UI: ir al primer turno sin pausar la reproducción.</summary>
     public void OnClickFirst()  { FirstTurn(); playTimer = 0f; }
+    /// <summary>Handler de UI: turno anterior sin pausar la reproducción.</summary>
     public void OnClickPrev()   { PrevTurn();  playTimer = 0f; }
+    /// <summary>Handler de UI: turno siguiente sin pausar la reproducción.</summary>
     public void OnClickNext()   { NextTurn();  playTimer = 0f; }
+    /// <summary>Handler de UI: ir al último turno sin pausar la reproducción.</summary>
     public void OnClickLast()   { LastTurn();  playTimer = 0f; }
 
+    /// <summary>
+    /// Handler del botón central del HUD: abre el menú de pausa si existe un
+    /// <see cref="PauseMenu"/> en la escena; si no, alterna la reproducción.
+    /// </summary>
     // El botón central del HUD (antes "play") ahora abre el menú de pausa.
     public void OnClickPlay()
     {
@@ -203,6 +280,8 @@ public class GameManager : MonoBehaviour
         else TogglePlay();
     }
 
+    /// <summary>Etiqueta "Turno X / total" para el HUD (o <c>"—"</c> si no hay simulación).</summary>
+    /// <returns>Texto listo para mostrar; el total es <c>TurnCount - 1</c> porque el snapshot 0 es el estado inicial.</returns>
     public string GetTurnLabel()
     {
         if (!useJson) return "—";
@@ -214,6 +293,20 @@ public class GameManager : MonoBehaviour
 
     // ── Reproducción animada de un turno ──
 
+    /// <summary>
+    /// Reproduce un turno con animación: (1) el bombero que actuó camina paso a paso hasta su
+    /// casilla final; (2) aparecen escalonadamente los hazards nuevos (celdas que pasaron a
+    /// FIRE/SMOKE respecto al turno anterior); (3) se fija el estado autoritativo del turno con
+    /// <see cref="BoardBuilder.Render(BoardData)"/> y se actualiza el HUD.
+    /// </summary>
+    /// <param name="index">Índice del turno a reproducir.</param>
+    /// <returns>Enumerador de corrutina.</returns>
+    /// <remarks>
+    /// El bloque <c>try/finally</c> garantiza que <see cref="isAnimating"/> vuelve a <c>false</c>
+    /// y <see cref="animCo"/> a <c>null</c> aunque la corrutina termine por <c>yield break</c>,
+    /// por <see cref="MonoBehaviour.StopCoroutine(Coroutine)"/> o por excepción.
+    /// Complejidad dominada por O(pasos del actor) + O(height·width) del diff de hazards.
+    /// </remarks>
     IEnumerator AnimateTurn(int index)
     {
         isAnimating = true;
