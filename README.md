@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Flashpoint Simulación
 
 Simulación basada en el juego Flash Point: Fire Rescue. La lógica multiagente está
@@ -58,13 +57,6 @@ aleatoria); los controles de playback permiten avanzar y retroceder turnos.
 ## Estructura del proyecto
 
 ```
-src/game/            - Simulación multiagente (Mesa)
-  model.py           - Modelo principal (FirefighterModel): motor de la partida
-  agents.py          - Agente bombero (Firefighter) con estrategia coordinada
-  board.py           - Tablero: celdas, paredes, puertas y POIs
-  fire_rules.py      - Propagación del fuego, explosiones, flashover y reposición de POIs
-  __init__.py        - Punto de entrada (run_simulation / main)
-
 Assets/
   Scripts/
     GameManager.cs   - Playback: navega los turnos del JSON y los renderiza con animación
@@ -99,38 +91,19 @@ Multiagentes.pdf     - Enunciado del reto
 Algunas partes de este proyecto fueron generadas con ayuda de la IA. A
 continuación se mencionan estas partes.
 
-Sin embargo, cabe recalcar que las estrategias, algoritmos, y lógica principal no
-fue generada con IA.
-
 **General**
 
 - La documentación de funciones, métodos y clases fue generada con IA.
 - Las convenciones de nombres, así como el `_` para métodos privados, fueron
   sugeridas por la IA.
 
-**`model.py`**
-
-- <describir aquí la ayuda puntual de IA, p. ej. bugs resueltos o argumentos sugeridos>
-
-**`agents.py`**
-
-- <describir aquí la ayuda puntual de IA>
-
-**`board.py`**
-
-- <describir aquí la ayuda puntual de IA>
-
-**`fire_rules.py`**
-
-- <describir aquí la ayuda puntual de IA>
-
 **Scripts de Unity (`Assets/Scripts/`)**
 
-- <describir aquí la ayuda puntual de IA en el parser de JSON, playback, HUD, etc.>
+- JsonLoader y JsonUtility: Investigación hecha con IA para cubrir todos los aspectos y posibles errores que pudieran surgir a la hora de conectarse con el servidor
+- UIManager: Ajuste de botones en código y ayuda en los botones para pasar de step (turno) en la simulación.
 
-**`README.md`**
+**Arte**
+Uso de IA para la generación de la pantalla de juego principal
 
-- La IA se utilizó como ayuda para redactar este README.
-=======
-Hello World
->>>>>>> c6fd32b36572ffa326286198bd594b9d48d0e547
+**Assets**
+[Kenney](https://kenney.nl/assets/graveyard-kit)
