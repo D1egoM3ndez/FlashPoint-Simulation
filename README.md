@@ -72,7 +72,7 @@ Assets/
   Scenes/, Prefabs/, Models/, Materials/, Animations/ - Recursos de la escena
 
 Diagramas_de_estado/ - Diagramas de estado (PlantUML): juego, celdas, agentes, paredes y POIs
-Multiagentes.pdf     - Enunciado del reto
+Multiagentes.pdf     - Presentación del reto
 ```
 
 ## Agentes
